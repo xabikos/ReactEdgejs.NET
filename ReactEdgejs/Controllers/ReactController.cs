@@ -7,7 +7,7 @@ namespace ReactEdgejs.Controllers
     {
         // GET: React
         public ActionResult Index()
-        {            
+        {
             var generatedScript = System.IO.File.ReadAllText(Server.MapPath("~/app/generated/server.bundle.js"));
             var edgeServer = System.IO.File.ReadAllText(Server.MapPath("~/app/edgeServer.js"));
             var final = generatedScript + edgeServer;
