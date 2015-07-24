@@ -132,6 +132,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\client.js" />
+    <Content Include="app\generated\client.bundle.js" />
     <Content Include="app\routes.js" />
     <Content Include="app\edgeServer.js" />
     <Content Include="app\generated\server.bundle.js" />

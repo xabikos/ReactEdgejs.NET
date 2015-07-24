@@ -3,7 +3,8 @@
 module.exports = {
   context: path.join(__dirname, 'app'),
   entry: {
-    server: './server'
+    server: './server',
+    client: './client'
   },
   output: {
     path: path.join(__dirname, 'app/generated'),

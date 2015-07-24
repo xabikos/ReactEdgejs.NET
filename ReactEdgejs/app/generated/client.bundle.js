@@ -46,11 +46,25 @@
 
 	'use strict';
 
-	__webpack_require__(192);
-	// Expose react in the global score so Edge.js can access it to successfully render
-	__webpack_require__(194);
-	__webpack_require__(195);
-	__webpack_require__(196);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _reactRouter = __webpack_require__(1);
+
+	var _reactRouterLibBrowserHistory = __webpack_require__(185);
+
+	var _reactRouterLibBrowserHistory2 = _interopRequireDefault(_reactRouterLibBrowserHistory);
+
+	var _routes = __webpack_require__(187);
+
+	var _routes2 = _interopRequireDefault(_routes);
+
+	var _reactRouterLibHashHistory = __webpack_require__(191);
+
+	React.render(React.createElement(_reactRouter.Router, { history: _reactRouterLibHashHistory.history, children: _routes2['default'] }), document.getElementById('app'));
+
+	//Router.run(routes, location, function(error, initialState, transition) {
+	//  React.render(<Router children={routes}/>, document.getElementById('app'));
+	//});
 
 /***/ },
 /* 1 */
@@ -23160,8 +23174,193 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 185 */,
-/* 186 */,
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+
+	var _DOMHistory2 = __webpack_require__(186);
+
+	var _DOMHistory3 = _interopRequireDefault(_DOMHistory2);
+
+	var _DOMUtils = __webpack_require__(177);
+
+	var _NavigationTypes = __webpack_require__(172);
+
+	var _NavigationTypes2 = _interopRequireDefault(_NavigationTypes);
+
+	function updateCurrentState(extraState) {
+	  var state = window.history.state;
+
+	  if (state) window.history.replaceState(_extends(state, extraState), '');
+	}
+
+	/**
+	 * A history implementation for DOM environments that support the
+	 * HTML5 history API (pushState, replaceState, and the popstate event).
+	 * Provides the cleanest URLs and should always be used in browser
+	 * environments if possible.
+	 *
+	 * Note: BrowserHistory automatically falls back to using full page
+	 * refreshes if HTML5 history is not available, so URLs are always
+	 * the same across browsers.
+	 */
+
+	var BrowserHistory = (function (_DOMHistory) {
+	  function BrowserHistory(options) {
+	    _classCallCheck(this, BrowserHistory);
+
+	    _DOMHistory.call(this, options);
+	    this.handlePopState = this.handlePopState.bind(this);
+	    this.isSupported = (0, _DOMUtils.supportsHistory)();
+	  }
+
+	  _inherits(BrowserHistory, _DOMHistory);
+
+	  BrowserHistory.prototype._updateLocation = function _updateLocation(navigationType) {
+	    var state = null;
+
+	    if (this.isSupported) {
+	      var historyState = window.history.state;
+	      state = this._createState(historyState);
+
+	      if (!historyState || !historyState.key) window.history.replaceState(state, '');
+	    }
+
+	    this.location = this.createLocation((0, _DOMUtils.getWindowPath)(), state, navigationType);
+	  };
+
+	  BrowserHistory.prototype.setup = function setup() {
+	    if (this.location == null) this._updateLocation();
+	  };
+
+	  BrowserHistory.prototype.handlePopState = function handlePopState(event) {
+	    if (event.state === undefined) return; // Ignore extraneous popstate events in WebKit.
+
+	    this._updateLocation(_NavigationTypes2['default'].POP);
+	    this._notifyChange();
+	  };
+
+	  BrowserHistory.prototype.addChangeListener = function addChangeListener(listener) {
+	    _DOMHistory.prototype.addChangeListener.call(this, listener);
+
+	    if (this.changeListeners.length === 1) {
+	      if (window.addEventListener) {
+	        window.addEventListener('popstate', this.handlePopState, false);
+	      } else {
+	        window.attachEvent('onpopstate', this.handlePopState);
+	      }
+	    }
+	  };
+
+	  BrowserHistory.prototype.removeChangeListener = function removeChangeListener(listener) {
+	    _DOMHistory.prototype.removeChangeListener.call(this, listener);
+
+	    if (this.changeListeners.length === 0) {
+	      if (window.removeEventListener) {
+	        window.removeEventListener('popstate', this.handlePopState, false);
+	      } else {
+	        window.detachEvent('onpopstate', this.handlePopState);
+	      }
+	    }
+	  };
+
+	  // http://www.w3.org/TR/2011/WD-html5-20110113/history.html#dom-history-pushstate
+
+	  BrowserHistory.prototype.pushState = function pushState(state, path) {
+	    if (this.isSupported) {
+	      updateCurrentState(this.getScrollPosition());
+
+	      state = this._createState(state);
+
+	      window.history.pushState(state, '', path);
+	      this.location = this.createLocation(path, state, _NavigationTypes2['default'].PUSH);
+	      this._notifyChange();
+	    } else {
+	      window.location = path;
+	    }
+	  };
+
+	  // http://www.w3.org/TR/2011/WD-html5-20110113/history.html#dom-history-replacestate
+
+	  BrowserHistory.prototype.replaceState = function replaceState(state, path) {
+	    if (this.isSupported) {
+	      state = this._createState(state);
+
+	      window.history.replaceState(state, '', path);
+	      this.location = this.createLocation(path, state, _NavigationTypes2['default'].REPLACE);
+	      this._notifyChange();
+	    } else {
+	      window.location.replace(path);
+	    }
+	  };
+
+	  return BrowserHistory;
+	})(_DOMHistory3['default']);
+
+	var history = new BrowserHistory();
+	exports.history = history;
+	exports['default'] = BrowserHistory;
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+
+	var _History2 = __webpack_require__(174);
+
+	var _History3 = _interopRequireDefault(_History2);
+
+	var _DOMUtils = __webpack_require__(177);
+
+	/**
+	 * A history interface that assumes a DOM environment.
+	 */
+
+	var DOMHistory = (function (_History) {
+	  function DOMHistory() {
+	    var options = arguments[0] === undefined ? {} : arguments[0];
+
+	    _classCallCheck(this, DOMHistory);
+
+	    _History.call(this, options);
+	    this.getScrollPosition = options.getScrollPosition || _DOMUtils.getWindowScrollPosition;
+	  }
+
+	  _inherits(DOMHistory, _History);
+
+	  DOMHistory.prototype.go = function go(n) {
+	    if (n === 0) return;
+
+	    window.history.go(n);
+	  };
+
+	  return DOMHistory;
+	})(_History3['default']);
+
+	exports['default'] = DOMHistory;
+	module.exports = exports['default'];
+
+/***/ },
 /* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -23374,43 +23573,203 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 191 */,
-/* 192 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Components"] = __webpack_require__(193);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 193 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = {
-	  App: __webpack_require__(188)
-	};
+	exports.__esModule = true;
 
-/***/ },
-/* 194 */
-/***/ function(module, exports, __webpack_require__) {
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["React"] = __webpack_require__(3);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-/***/ },
-/* 195 */
-/***/ function(module, exports, __webpack_require__) {
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["ReactRouter"] = __webpack_require__(1);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
-/***/ },
-/* 196 */
-/***/ function(module, exports, __webpack_require__) {
+	var _warning = __webpack_require__(159);
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Routes"] = __webpack_require__(187);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+	var _warning2 = _interopRequireDefault(_warning);
+
+	var _DOMHistory2 = __webpack_require__(186);
+
+	var _DOMHistory3 = _interopRequireDefault(_DOMHistory2);
+
+	var _NavigationTypes = __webpack_require__(172);
+
+	var _NavigationTypes2 = _interopRequireDefault(_NavigationTypes);
+
+	var _DOMUtils = __webpack_require__(177);
+
+	var _URLUtils = __webpack_require__(164);
+
+	var DefaultQueryKey = '_qk';
+
+	function ensureSlash() {
+	  var path = (0, _DOMUtils.getHashPath)();
+
+	  if ((0, _URLUtils.isAbsolutePath)(path)) return true;
+
+	  (0, _DOMUtils.replaceHashPath)('/' + path);
+
+	  return false;
+	}
+
+	function addQueryStringValueToPath(path, key, value) {
+	  return path + (path.indexOf('?') === -1 ? '?' : '&') + ('' + key + '=' + value);
+	}
+
+	function getQueryStringValueFromPath(path, key) {
+	  var match = path.match(new RegExp('\\?.*?\\b' + key + '=(.+?)\\b'));
+	  return match && match[1];
+	}
+
+	function saveState(path, queryKey, state) {
+	  window.sessionStorage.setItem(state.key, JSON.stringify(state));
+	  return addQueryStringValueToPath(path, queryKey, state.key);
+	}
+
+	function readState(path, queryKey) {
+	  var sessionKey = getQueryStringValueFromPath(path, queryKey);
+	  var json = sessionKey && window.sessionStorage.getItem(sessionKey);
+
+	  if (json) {
+	    try {
+	      return JSON.parse(json);
+	    } catch (error) {}
+	  }
+
+	  return null;
+	}
+
+	function updateCurrentState(queryKey, extraState) {
+	  var path = (0, _DOMUtils.getHashPath)();
+	  var state = readState(path, queryKey);
+
+	  if (state) saveState(path, queryKey, _extends(state, extraState));
+	}
+
+	/**
+	 * A history implementation for DOM environments that uses window.location.hash
+	 * to store the current path. This is essentially a hack for older browsers that
+	 * do not support the HTML5 history API (IE <= 9).
+	 *
+	 * Support for persistence of state across page refreshes is provided using a
+	 * combination of a URL query string parameter and DOM storage. However, this
+	 * support is not enabled by default. In order to use it, create your own
+	 * HashHistory.
+	 *
+	 *   import HashHistory from 'react-router/lib/HashHistory';
+	 *   var StatefulHashHistory = new HashHistory({ queryKey: '_key' });
+	 *   React.render(<Router history={StatefulHashHistory} .../>, ...);
+	 */
+
+	var HashHistory = (function (_DOMHistory) {
+	  function HashHistory() {
+	    var options = arguments[0] === undefined ? {} : arguments[0];
+
+	    _classCallCheck(this, HashHistory);
+
+	    _DOMHistory.call(this, options);
+	    this.handleHashChange = this.handleHashChange.bind(this);
+	    this.queryKey = options.queryKey;
+
+	    if (typeof this.queryKey !== 'string') this.queryKey = this.queryKey ? DefaultQueryKey : null;
+	  }
+
+	  _inherits(HashHistory, _DOMHistory);
+
+	  HashHistory.prototype._updateLocation = function _updateLocation(navigationType) {
+	    var path = (0, _DOMUtils.getHashPath)();
+	    var state = this.queryKey ? readState(path, this.queryKey) : null;
+	    this.location = this.createLocation(path, state, navigationType);
+	  };
+
+	  HashHistory.prototype.setup = function setup() {
+	    if (this.location == null) {
+	      ensureSlash();
+	      this._updateLocation();
+	    }
+	  };
+
+	  HashHistory.prototype.handleHashChange = function handleHashChange() {
+	    if (!ensureSlash()) return;
+
+	    if (this._ignoreNextHashChange) {
+	      this._ignoreNextHashChange = false;
+	    } else {
+	      this._updateLocation(_NavigationTypes2['default'].POP);
+	      this._notifyChange();
+	    }
+	  };
+
+	  HashHistory.prototype.addChangeListener = function addChangeListener(listener) {
+	    _DOMHistory.prototype.addChangeListener.call(this, listener);
+
+	    if (this.changeListeners.length === 1) {
+	      if (window.addEventListener) {
+	        window.addEventListener('hashchange', this.handleHashChange, false);
+	      } else {
+	        window.attachEvent('onhashchange', this.handleHashChange);
+	      }
+	    }
+	  };
+
+	  HashHistory.prototype.removeChangeListener = function removeChangeListener(listener) {
+	    _DOMHistory.prototype.removeChangeListener.call(this, listener);
+
+	    if (this.changeListeners.length === 0) {
+	      if (window.removeEventListener) {
+	        window.removeEventListener('hashchange', this.handleHashChange, false);
+	      } else {
+	        window.detachEvent('onhashchange', this.handleHashChange);
+	      }
+	    }
+	  };
+
+	  HashHistory.prototype.pushState = function pushState(state, path) {
+	    (0, _warning2['default'])(this.queryKey || state == null, 'HashHistory needs a queryKey in order to persist state');
+
+	    if (this.queryKey) updateCurrentState(this.queryKey, this.getScrollPosition());
+
+	    state = this._createState(state);
+
+	    if (this.queryKey) path = saveState(path, this.queryKey, state);
+
+	    this._ignoreNextHashChange = true;
+	    window.location.hash = path;
+
+	    this.location = this.createLocation(path, state, _NavigationTypes2['default'].PUSH);
+
+	    this._notifyChange();
+	  };
+
+	  HashHistory.prototype.replaceState = function replaceState(state, path) {
+	    state = this._createState(state);
+
+	    if (this.queryKey) path = saveState(path, this.queryKey, state);
+
+	    this._ignoreNextHashChange = true;
+	    (0, _DOMUtils.replaceHashPath)(path);
+
+	    this.location = this.createLocation(path, state, _NavigationTypes2['default'].REPLACE);
+
+	    this._notifyChange();
+	  };
+
+	  HashHistory.prototype.makeHref = function makeHref(path) {
+	    return '#' + path;
+	  };
+
+	  return HashHistory;
+	})(_DOMHistory3['default']);
+
+	var history = new HashHistory();
+	exports.history = history;
+	exports['default'] = HashHistory;
+
+	// Ignore invalid JSON in session storage.
 
 /***/ }
 /******/ ]);
