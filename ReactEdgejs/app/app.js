@@ -1,3 +1,3 @@
-﻿module.exports = {
-  TestComponent: require('./testComponent')  
+﻿module.exports = {  
+  App: require('./components/app')
 };
