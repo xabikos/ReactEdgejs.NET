@@ -132,7 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
-    <Content Include="app\edgeHeaders.js" />
     <Content Include="app\edgeServer.js" />
     <Content Include="app\generated\server.bundle.js" />
     <Content Include="app\server.js" />

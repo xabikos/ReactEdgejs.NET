@@ -21,6 +21,6 @@ module.exports = {
   },
   externals: {
     // Use external version of React (from CDN for client-side, or bundled with ReactJS.NET for server-side)
-    react: 'React'    
+    //react: 'React'    
   }
 };
