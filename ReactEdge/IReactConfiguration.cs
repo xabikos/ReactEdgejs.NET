@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReactEdge
 {
     public interface IReactConfiguration
     {
+        bool UseInternalReactScript { get; }
+        IReactConfiguration SetUseInternalReactScript(bool useInternalReactScript);
 
         bool UseServerSideRendering { get; }
         IReactConfiguration SetUseServerSideRendering(bool useServerSideRendering);

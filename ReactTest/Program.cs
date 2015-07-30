@@ -11,7 +11,6 @@ namespace ReactTest
     {
 
         static string GeneratedScript = @"
-                var React = require('react');
                 var HelloMessage = React.createClass({displayName: ""HelloMessage"",
                   render: function()
                         {
@@ -21,7 +20,9 @@ namespace ReactTest
 
         static void Main(string[] args)
         {
-            ReactConfiguration.Configuration.SetGeneratedScriptContent(GeneratedScript);
+            ReactConfiguration.Configuration
+                .SetGeneratedScriptContent(GeneratedScript)
+                .SetUseInternalReactScript(true);
 
             var reactContext = new ReactContext(ReactConfiguration.Configuration);
             var result = reactContext.GetHtml("HelloMessage", new { name = "Babis" }).Result;

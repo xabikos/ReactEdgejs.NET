@@ -13,11 +13,19 @@ namespace ReactEdge
 
         public string GeneratedScriptContent { get; set; }
 
+        public bool UseInternalReactScript { get; set; }
+
         public bool UseServerSideRendering { get; set; }
 
         public IReactConfiguration SetGeneratedScriptContent(string generatedScriptPath)
         {
             GeneratedScriptContent = generatedScriptPath;
+            return this;
+        }
+
+        public IReactConfiguration SetUseInternalReactScript(bool useInternalReactScript)
+        {
+            UseInternalReactScript = useInternalReactScript;
             return this;
         }
 
