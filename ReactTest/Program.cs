@@ -1,10 +1,6 @@
 ﻿using ReactEdge;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ReactEdge.Exceptions;
+using System.IO;
 
 namespace ReactTest
 {
@@ -21,9 +17,10 @@ namespace ReactTest
 
         static void Main(string[] args)
         {
+            var generatedScript = File.ReadAllText("app.bundle.js");
             ReactConfiguration.Configuration
-                .SetGeneratedScriptContent(GeneratedScript)
-                .SetUseInternalReactScript(true);
+                .SetGeneratedScriptContent(generatedScript)
+                .SetUseInternalReactScript(false);
 
             var reactContext = new ReactContext(ReactConfiguration.Configuration);
             try {

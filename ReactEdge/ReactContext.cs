@@ -38,42 +38,25 @@ namespace ReactEdge
 
         public async Task<string> GetHtml(string componentName, object props)
         {
-            EnsureReactPackageInstalled();
+            EnsureReactIsInitialized();
             var environment = Edge.Func(GetScript());
             var result = await environment(new { componentName = componentName, dataProps = props });
             return result.ToString();
         }
 
-        protected void EnsureReactPackageInstalled()
+        protected void EnsureReactIsInitialized()
         {
             if (_config.UseInternalReactScript)
             {
-                const string reactIsInstalledScript = @"
-                    require('react');
-                    return function (data, callback) {
-                      callback(null, {});
-                    }";
-                try
-                {
-                    var env = Edge.Func(reactIsInstalledScript);
-                }
-                catch (AggregateException ex)
-                {
-                    if (ex.InnerException != null &&
-                        ex.InnerException.Message.IndexOf("Cannot find module 'react'", StringComparison.OrdinalIgnoreCase) >= 0)
-                    {
-                        throw new ReactNotInstalledException("React node package is not properly installed. Please execute 'npm install react' in the execution folder");
-                    }
-                    throw ex;
-                }
+                EnsureReactIsInstalled();
             }
             else
             {
-
+                EnsureReactIsExposed();
             }
         }
 
-        protected string GetScript()
+        private string GetScript()
         {
             var result = string.Empty;
             result += _config.UseInternalReactScript ?
@@ -85,6 +68,50 @@ namespace ReactEdge
                 _config.GeneratedScriptContent + edgeCallback;
 
             return result;
+        }
+
+        private static void EnsureReactIsInstalled()
+        {
+            const string reactIsInstalledScript = @"
+                    require('react');
+                    return function (data, callback) {
+                      callback(null, {});
+                    }";
+            try
+            {
+                var env = Edge.Func(reactIsInstalledScript);
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerException != null &&
+                    ex.InnerException.Message.IndexOf("Cannot find module 'react'", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    throw new ReactNotInstalledException("React node package is not properly installed. Please execute 'npm install react' in the execution folder.");
+                }
+                throw ex;
+            }
+        }
+
+        private void EnsureReactIsExposed()
+        {
+            const string reactIsExposedScript = @"
+                        React.createElement('div', null);
+                        return function (data, callback) {
+                            callback(null, {});
+                        }";
+            try
+            {
+                var env = Edge.Func(_config.GeneratedScriptContent + reactIsExposedScript);
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerException != null &&
+                    ex.InnerException.Message.IndexOf("React is not defined", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    throw new ReactNotExposedException("React is not exposed in the global scope. Try to use expose loader.");
+                }
+                throw ex;
+            }
         }
 
     }
