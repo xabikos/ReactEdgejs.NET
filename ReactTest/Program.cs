@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ReactEdge.Exceptions;
 
 namespace ReactTest
 {
@@ -25,7 +26,14 @@ namespace ReactTest
                 .SetUseInternalReactScript(true);
 
             var reactContext = new ReactContext(ReactConfiguration.Configuration);
-            var result = reactContext.GetHtml("HelloMessage", new { name = "Babis" }).Result;
+            try {
+                var result = reactContext.GetHtml("HelloMessage", new { name = "Babis" }).Result;
+            }
+            catch (AggregateException ex)
+            {
+                Console.WriteLine(ex.InnerException.Message);
+            }
+            Console.ReadLine();
         }
     }
 }

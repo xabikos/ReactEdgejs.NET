@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using EdgeJs;
+using ReactEdge.Exceptions;
 
 namespace ReactEdge
 {
@@ -36,9 +38,39 @@ namespace ReactEdge
 
         public async Task<string> GetHtml(string componentName, object props)
         {
+            EnsureReactPackageInstalled();
             var environment = Edge.Func(GetScript());
             var result = await environment(new { componentName = componentName, dataProps = props });
             return result.ToString();
+        }
+
+        protected void EnsureReactPackageInstalled()
+        {
+            if (_config.UseInternalReactScript)
+            {
+                const string reactIsInstalledScript = @"
+                    require('react');
+                    return function (data, callback) {
+                      callback(null, {});
+                    }";
+                try
+                {
+                    var env = Edge.Func(reactIsInstalledScript);
+                }
+                catch (AggregateException ex)
+                {
+                    if (ex.InnerException != null &&
+                        ex.InnerException.Message.IndexOf("Cannot find module 'react'", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        throw new ReactNotInstalledException("React node package is not properly installed. Please execute 'npm install react' in the execution folder");
+                    }
+                    throw ex;
+                }
+            }
+            else
+            {
+
+            }
         }
 
         protected string GetScript()

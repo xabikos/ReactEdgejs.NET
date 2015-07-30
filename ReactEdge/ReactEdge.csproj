@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\ReactEdgeException.cs" />
+    <Compile Include="Exceptions\ReactNotInstalledException.cs" />
     <Compile Include="IReactConfiguration.cs" />
     <Compile Include="IReactContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
