@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactTest", "ReactTest\Reac
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{71EEDD62-4754-4BF7-9D7D-162EEFE9743D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactEdge.Sample.Mvc5", "ReactEdge.Sample.Mvc5\ReactEdge.Sample.Mvc5.csproj", "{99780FF1-CF06-45B6-8DCC-3EFE1F44434C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,8 +31,15 @@ Global
 		{44DA28CD-9D3A-4E83-B71B-DCDC8D39DBE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44DA28CD-9D3A-4E83-B71B-DCDC8D39DBE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44DA28CD-9D3A-4E83-B71B-DCDC8D39DBE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99780FF1-CF06-45B6-8DCC-3EFE1F44434C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99780FF1-CF06-45B6-8DCC-3EFE1F44434C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99780FF1-CF06-45B6-8DCC-3EFE1F44434C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99780FF1-CF06-45B6-8DCC-3EFE1F44434C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{99780FF1-CF06-45B6-8DCC-3EFE1F44434C} = {71EEDD62-4754-4BF7-9D7D-162EEFE9743D}
 	EndGlobalSection
 EndGlobal
