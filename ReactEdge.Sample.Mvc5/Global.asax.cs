@@ -16,6 +16,7 @@ namespace ReactEdge.Sample.Mvc5
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ReactConfig.Configure(Server.MapPath("~/app/generated/server.bundle.js"));
         }
     }
 }
