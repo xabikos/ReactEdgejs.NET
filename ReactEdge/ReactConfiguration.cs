@@ -15,7 +15,7 @@ namespace ReactEdge
 
         public bool UseInternalReactScript { get; set; }
 
-        public bool UseServerSideRendering { get; set; }
+        public bool UseServerSideRouting { get; set; }
 
         public IReactConfiguration SetGeneratedScriptContent(string generatedScriptPath)
         {
@@ -29,9 +29,9 @@ namespace ReactEdge
             return this;
         }
 
-        public IReactConfiguration SetUseServerSideRendering(bool useServerSideRendering)
+        public IReactConfiguration SetUseServerSideRouting(bool useServerSideRendering, string routesJson = null)
         {
-            UseServerSideRendering = useServerSideRendering;
+            UseServerSideRouting = useServerSideRendering;
             return this;
         }
     }

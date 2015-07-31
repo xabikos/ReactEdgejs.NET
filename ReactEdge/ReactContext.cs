@@ -18,11 +18,13 @@ namespace ReactEdge
 
         private const string edgeCallbackServerSideRendering = @"
                         var Location = require('react-router/lib/Location');
-                        var Router = ReactRouter.Router;
+                        var Router = require('react-router').Router;
 
                         return function (data, callback) {
                           var result;
-                          var location = new Location(data.route.path, data.route.query);
+                          var path = data.route.path ? data.route.path : '/';
+                          var queryString = data.route.queryString ? data.route.queryString : '';
+                          var location = new Location(path, queryString);
 
                           Router.run(Routes, location, function(error, initialState, transition) {
                             result = React.renderToString(React.createElement(Router, React.__spread({},  initialState)));
@@ -36,15 +38,30 @@ namespace ReactEdge
             _config = configuration;
         }
 
-        public async Task<string> GetHtml(string componentName, object props)
+        public async Task<string> GetHtml(string componentName, object props, Route route = null)
         {
             EnsureReactIsInitialized();
+            if (_config.UseServerSideRouting)
+            {
+                EnsureServerSideRoutingIsInitialized();
+                if(route == null)
+                {
+                    throw new RouteNullReferenceException("When using server side rendering the route parameter should not be null.");
+                }
+                var env = Edge.Func(GetScript());
+                var res = await env(new {
+                    componentName = componentName,
+                    dataProps = props,
+                    route = new { path = route.Path, queryString = route.QueryString }
+                });
+                return res.ToString();
+            }
             var environment = Edge.Func(GetScript());
             var result = await environment(new { componentName = componentName, dataProps = props });
             return result.ToString();
         }
 
-        protected void EnsureReactIsInitialized()
+        private void EnsureReactIsInitialized()
         {
             if (_config.UseInternalReactScript)
             {
@@ -56,6 +73,35 @@ namespace ReactEdge
             }
         }
 
+
+        private void EnsureServerSideRoutingIsInitialized()
+        {
+            const string reactRouterIsInstalledScript = @"
+                    require('react-router');
+                    var routes = Routes;
+                    return function (data, callback) {
+                      callback(null, {});
+                    }";
+            try
+            {
+                var env = Edge.Func(_config.GeneratedScriptContent + reactRouterIsInstalledScript);
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerException != null &&
+                    ex.InnerException.Message.IndexOf("Cannot find module 'react-router'", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    throw new ReactRouterNotInstalledException("React Router node package is not installed. Please execute 'npm install react-router' in the execution folder.");
+                }
+                if(ex.InnerException != null &&
+                    ex.InnerException.Message.IndexOf("Routes is not defined", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    throw new RoutesNotExposedException("Routes is not exposed in the global scope. Try to use expose loader.");
+                }
+                throw ex;
+            }
+        }
+
         private string GetScript()
         {
             var result = string.Empty;
@@ -63,7 +109,7 @@ namespace ReactEdge
                 "var React = require('react');"
                 : string.Empty;
 
-            result += _config.UseServerSideRendering ?
+            result += _config.UseServerSideRouting ?
                 _config.GeneratedScriptContent + edgeCallbackServerSideRendering :
                 _config.GeneratedScriptContent + edgeCallback;
 
@@ -86,7 +132,7 @@ namespace ReactEdge
                 if (ex.InnerException != null &&
                     ex.InnerException.Message.IndexOf("Cannot find module 'react'", StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-                    throw new ReactNotInstalledException("React node package is not properly installed. Please execute 'npm install react' in the execution folder.");
+                    throw new ReactNotInstalledException("React node package is not installed. Please execute 'npm install react' in the execution folder.");
                 }
                 throw ex;
             }

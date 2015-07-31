@@ -20,11 +20,12 @@ namespace ReactTest
             var generatedScript = File.ReadAllText("app.bundle.js");
             ReactConfiguration.Configuration
                 .SetGeneratedScriptContent(generatedScript)
-                .SetUseInternalReactScript(false);
+                .SetUseInternalReactScript(true)
+                .SetUseServerSideRouting(true);
 
             var reactContext = new ReactContext(ReactConfiguration.Configuration);
             try {
-                var result = reactContext.GetHtml("HelloMessage", new { name = "Babis" }).Result;
+                var result = reactContext.GetHtml("HelloMessage", new { name = "Babis" }, new Route("/", "")).Result;
             }
             catch (AggregateException ex)
             {

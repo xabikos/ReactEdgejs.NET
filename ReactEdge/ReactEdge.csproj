@@ -45,13 +45,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\ReactEdgeException.cs" />
+    <Compile Include="Exceptions\RouteNullreferenceException.cs" />
+    <Compile Include="Exceptions\RoutesNotExposedException.cs" />
     <Compile Include="Exceptions\ReactNotExposedException.cs" />
+    <Compile Include="Exceptions\ReactRouterNotInstalledException.cs" />
     <Compile Include="Exceptions\ReactNotInstalledException.cs" />
     <Compile Include="IReactConfiguration.cs" />
     <Compile Include="IReactContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReactConfiguration.cs" />
     <Compile Include="ReactContext.cs" />
+    <Compile Include="Route.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="edge\double_edge.js">

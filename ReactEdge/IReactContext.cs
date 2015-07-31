@@ -8,6 +8,6 @@ namespace ReactEdge
 {
     interface IReactContext
     {
-        Task<string> GetHtml(string componentName, object props);
+        Task<string> GetHtml(string componentName, object props, Route route = null);
     }
 }

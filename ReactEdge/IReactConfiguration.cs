@@ -7,8 +7,8 @@ namespace ReactEdge
         bool UseInternalReactScript { get; }
         IReactConfiguration SetUseInternalReactScript(bool useInternalReactScript);
 
-        bool UseServerSideRendering { get; }
-        IReactConfiguration SetUseServerSideRendering(bool useServerSideRendering);
+        bool UseServerSideRouting { get; }
+        IReactConfiguration SetUseServerSideRouting(bool useServerSideRendering, string routesJson = null);
 
         string GeneratedScriptContent { get; }
         IReactConfiguration SetGeneratedScriptContent(string generatedScriptPath);
