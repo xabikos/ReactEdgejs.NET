@@ -81,8 +81,6 @@
 
 	var _react = __webpack_require__(3);
 
-	//import ReactBootstrap from 'react-bootstrap';
-
 	var _react2 = _interopRequireDefault(_react);
 
 	var _reactBootstrap = __webpack_require__(159);
@@ -99,28 +97,103 @@
 	  _createClass(Index, [{
 	    key: 'render',
 	    value: function render() {
-	      //let Button = ReactBootstrap.Button;
-	      //let Jumbotron = ReactBootstrap.Jumbotron;
 	      return _react2['default'].createElement(
-	        _reactBootstrap.Jumbotron,
+	        'div',
 	        null,
 	        _react2['default'].createElement(
-	          'h1',
-	          null,
-	          'ASP.NET'
-	        ),
-	        _react2['default'].createElement(
-	          'p',
-	          { 'class': "lead" },
-	          'ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.'
-	        ),
-	        _react2['default'].createElement(
-	          'p',
+	          _reactBootstrap.Jumbotron,
 	          null,
 	          _react2['default'].createElement(
-	            _reactBootstrap.Button,
-	            { href: 'http://asp.net', bsStyle: 'primary', bsSize: 'large' },
-	            'Learn more »'
+	            'h1',
+	            null,
+	            'ASP.NET'
+	          ),
+	          _react2['default'].createElement(
+	            'p',
+	            { 'class': "lead" },
+	            'ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.'
+	          ),
+	          _react2['default'].createElement(
+	            'p',
+	            null,
+	            _react2['default'].createElement(
+	              _reactBootstrap.Button,
+	              { href: 'http://asp.net', bsStyle: 'primary', bsSize: 'large' },
+	              'Learn more »'
+	            )
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2['default'].createElement(
+	            _reactBootstrap.Col,
+	            { md: 4 },
+	            _react2['default'].createElement(
+	              'h2',
+	              null,
+	              'Getting started'
+	            ),
+	            _react2['default'].createElement(
+	              'p',
+	              null,
+	              'ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development.'
+	            ),
+	            _react2['default'].createElement(
+	              'p',
+	              null,
+	              _react2['default'].createElement(
+	                _reactBootstrap.Button,
+	                { href: 'http://go.microsoft.com/fwlink/?LinkId=301865' },
+	                'Learn more »'
+	              )
+	            )
+	          ),
+	          _react2['default'].createElement(
+	            _reactBootstrap.Col,
+	            { md: 4 },
+	            _react2['default'].createElement(
+	              'h2',
+	              null,
+	              'Get more libraries'
+	            ),
+	            _react2['default'].createElement(
+	              'p',
+	              null,
+	              'NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.'
+	            ),
+	            _react2['default'].createElement(
+	              'p',
+	              null,
+	              _react2['default'].createElement(
+	                _reactBootstrap.Button,
+	                { href: 'http://go.microsoft.com/fwlink/?LinkId=301866' },
+	                'Learn more »'
+	              )
+	            )
+	          ),
+	          _react2['default'].createElement(
+	            _reactBootstrap.Col,
+	            { md: 4 },
+	            _react2['default'].createElement(
+	              'h2',
+	              null,
+	              'Web Hosting'
+	            ),
+	            _react2['default'].createElement(
+	              'p',
+	              null,
+	              'You can easily find a web hosting company that offers the right mix of features and price for your applications.'
+	            ),
+	            _react2['default'].createElement(
+	              'p',
+	              null,
+	              _react2['default'].createElement(
+	                _reactBootstrap.Button,
+	                { href: 'http://go.microsoft.com/fwlink/?LinkId=301867' },
+	                'Learn more »'
+	              )
+	            )
 	          )
 	        )
 	      );

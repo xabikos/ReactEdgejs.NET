@@ -13,7 +13,7 @@ namespace ReactEdge.Sample.Mvc5.Controllers
         {
             var reactContext = new ReactContext(ReactConfiguration.Configuration);
             var result = await reactContext.GetHtml("Index", new { });
-            ViewBag.Jumb = result;
+            ViewBag.Indx = result;
             return View();
         }
 
