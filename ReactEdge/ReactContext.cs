@@ -10,28 +10,28 @@ namespace ReactEdge
         private readonly IReactConfiguration _config;
 
         private const string edgeCallback = @"
-                        return function (data, callback) {
-                            var result;
-                            result = React.renderToString(React.createElement(eval(data.componentName), data.dataProps));
-                            callback(null, result);
-                        }";
+            return function (data, callback) {
+              var result;
+              result = React.renderToString(React.createElement(eval(data.componentName), data.dataProps));
+              callback(null, result);
+            }";
 
         private const string edgeCallbackServerSideRendering = @"
-                        var Location = require('react-router/lib/Location');
-                        var Router = require('react-router').Router;
+            var Location = require('react-router/lib/Location');
+            var Router = ReactRouter.Router;
 
-                        return function (data, callback) {
-                          var result;
-                          var path = data.route.path ? data.route.path : '/';
-                          var queryString = data.route.queryString ? data.route.queryString : '';
-                          var location = new Location(path, queryString);
+            return function (data, callback) {
+              var result;
+              var path = data.route.path ? data.route.path : '/';
+              var queryString = data.route.queryString ? data.route.queryString : '';
+              var location = new Location(path, queryString);
 
-                          Router.run(Routes, location, function(error, initialState, transition) {
-                            result = React.renderToString(React.createElement(Router, React.__spread({},  initialState)));
-                          });
+              Router.run(Routes, location, function(error, initialState, transition) {
+                result = React.renderToString(React.createElement(Router, React.__spread({},  initialState)));
+              });
 
-                          callback(null, result);
-                        }";
+              callback(null, result);
+            }";
 
         public ReactContext(IReactConfiguration configuration)
         {
@@ -61,6 +61,27 @@ namespace ReactEdge
             return result.ToString();
         }
 
+        public async Task<string> GetHtmlForRoute(object props, Route route)
+        {
+            EnsureReactIsInitialized();
+            if (!_config.UseServerSideRouting)
+            {
+                throw new ServerSideRoutingNotEnabledException("You must enable server side routing when using GetHtmlForRoute method");
+            }
+            EnsureServerSideRoutingIsInitialized();
+            if (route == null)
+            {
+                throw new RouteNullReferenceException("When using server side rendering the route parameter should not be null.");
+            }
+            var env = Edge.Func(GetScript());
+            var res = await env(new
+            {
+                dataProps = props,
+                route = new { path = route.Path, queryString = route.QueryString }
+            });
+            return res.ToString();
+        }
+
         private void EnsureReactIsInitialized()
         {
             if (_config.UseInternalReactScript)
@@ -77,11 +98,11 @@ namespace ReactEdge
         private void EnsureServerSideRoutingIsInitialized()
         {
             const string reactRouterIsInstalledScript = @"
-                    require('react-router');
-                    var routes = Routes;
-                    return function (data, callback) {
-                      callback(null, {});
-                    }";
+                require('react-router');
+                var routes = Routes;
+                return function (data, callback) {
+                    callback(null, {});
+                }";
             try
             {
                 var env = Edge.Func(_config.GeneratedScriptContent + reactRouterIsInstalledScript);

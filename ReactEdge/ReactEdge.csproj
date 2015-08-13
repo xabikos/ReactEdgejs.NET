@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\ReactEdgeException.cs" />
+    <Compile Include="Exceptions\ServerSideRoutingNotEnabledException.cs" />
     <Compile Include="Exceptions\RouteNullreferenceException.cs" />
     <Compile Include="Exceptions\RoutesNotExposedException.cs" />
     <Compile Include="Exceptions\ReactNotExposedException.cs" />

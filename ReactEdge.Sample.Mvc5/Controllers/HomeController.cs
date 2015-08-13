@@ -9,7 +9,7 @@ namespace ReactEdge.Sample.Mvc5.Controllers
         public async Task<ActionResult> Index()
         {
             var reactContext = new ReactContext(ReactConfiguration.Configuration);
-            var result = await reactContext.GetHtml("Index", new { });
+            var result = await reactContext.GetHtml("Index", new { }, new Route(Request.Path, ""));
             ViewBag.Indx = result;
             return View();
         }

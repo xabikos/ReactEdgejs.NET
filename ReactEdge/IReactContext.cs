@@ -9,5 +9,7 @@ namespace ReactEdge
     interface IReactContext
     {
         Task<string> GetHtml(string componentName, object props, Route route = null);
+
+        Task<string> GetHtmlForRoute(object props, Route route);
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -12,6 +9,12 @@ namespace ReactEdge.Sample.Mvc5
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                "React",
+                url: "{*.}",
+                defaults: new { controller = "React", action = "RenderReact" }
+            );
 
             routes.MapRoute(
                 name: "Default",
