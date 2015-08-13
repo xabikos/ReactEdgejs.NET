@@ -148,6 +148,8 @@
     <Content Include="package.json" />
     <Content Include="webpack.config.js" />
     <Content Include="app\components\index.jsx" />
+    <Content Include="app\components\about.jsx" />
+    <Content Include="app\components\contact.jsx" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />

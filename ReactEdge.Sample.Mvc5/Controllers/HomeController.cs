@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ReactEdge.Sample.Mvc5.Controllers
@@ -17,17 +14,20 @@ namespace ReactEdge.Sample.Mvc5.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public async Task<ActionResult> About()
         {
-            ViewBag.Message = "Your application description page.";
-
+            var reactContext = new ReactContext(ReactConfiguration.Configuration);
+            var result = await reactContext.GetHtml("About", new { message = "Your application description page." });
+            ViewBag.About = result;
             return View();
         }
 
-        public ActionResult Contact()
+        public async Task<ActionResult> Contact()
         {
             ViewBag.Message = "Your contact page.";
-
+            var reactContext = new ReactContext(ReactConfiguration.Configuration);
+            var result = await reactContext.GetHtml("Contact", new { message = "Your contact page." });
+            ViewBag.Contact = result;
             return View();
         }
     }

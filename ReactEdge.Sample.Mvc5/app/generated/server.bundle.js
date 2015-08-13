@@ -47,6 +47,8 @@
 	'use strict';
 
 	__webpack_require__(1);
+	__webpack_require__(294);
+	__webpack_require__(296);
 	// Expose react in the global score so Edge.js can access it to successfully render
 	__webpack_require__(293);
 	//require('expose?ReactRouter!react-router');
@@ -31856,6 +31858,174 @@
 
 	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["React"] = __webpack_require__(3);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 294 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["About"] = __webpack_require__(295);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 295 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var About = (function (_React$Component) {
+	  _inherits(About, _React$Component);
+
+	  function About(props) {
+	    _classCallCheck(this, About);
+
+	    _get(Object.getPrototypeOf(About.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(About, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        null,
+	        _react2['default'].createElement(
+	          'h3',
+	          null,
+	          this.props.message
+	        ),
+	        _react2['default'].createElement(
+	          'p',
+	          null,
+	          'Use this area to provide additional information.'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return About;
+	})(_react2['default'].Component);
+
+	exports['default'] = About;
+	module.exports = exports['default'];
+
+/***/ },
+/* 296 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Contact"] = __webpack_require__(297);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 297 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var Contact = (function (_React$Component) {
+	  _inherits(Contact, _React$Component);
+
+	  function Contact(props) {
+	    _classCallCheck(this, Contact);
+
+	    _get(Object.getPrototypeOf(Contact.prototype), "constructor", this).call(this, props);
+	  }
+
+	  _createClass(Contact, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2["default"].createElement(
+	        "div",
+	        null,
+	        _react2["default"].createElement(
+	          "h3",
+	          null,
+	          this.props.message
+	        ),
+	        _react2["default"].createElement(
+	          "address",
+	          null,
+	          "One Microsoft Way",
+	          _react2["default"].createElement("br", null),
+	          "Redmond, WA 98052-6399",
+	          _react2["default"].createElement("br", null),
+	          _react2["default"].createElement(
+	            "abbr",
+	            { title: "Phone" },
+	            "P: "
+	          ),
+	          "425.555.0100"
+	        ),
+	        _react2["default"].createElement(
+	          "address",
+	          null,
+	          _react2["default"].createElement(
+	            "strong",
+	            null,
+	            "Support:"
+	          ),
+	          "   ",
+	          _react2["default"].createElement(
+	            "a",
+	            { href: "mailto:Support@example.com" },
+	            "Support@example.com"
+	          ),
+	          _react2["default"].createElement("br", null),
+	          _react2["default"].createElement(
+	            "strong",
+	            null,
+	            "Marketing:"
+	          ),
+	          " ",
+	          _react2["default"].createElement(
+	            "a",
+	            { href: "mailto:Marketing@example.com" },
+	            "Marketing@example.com"
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Contact;
+	})(_react2["default"].Component);
+
+	exports["default"] = Contact;
+	module.exports = exports["default"];
 
 /***/ }
 /******/ ]);
