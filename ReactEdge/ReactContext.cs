@@ -12,7 +12,7 @@ namespace ReactEdge
         private const string edgeCallback = @"
             return function (data, callback) {
               var result;
-              result = React.renderToString(React.createElement(eval(data.componentName), data.dataProps));
+              result = ReactDOMServer.renderToString(React.createElement(eval(data.componentName), data.dataProps));
               callback(null, result);
             }";
 

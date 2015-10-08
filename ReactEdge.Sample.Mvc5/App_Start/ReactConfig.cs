@@ -8,7 +8,7 @@ namespace ReactEdge.Sample.Mvc5
         public static void Configure(string generatedScriptPath)
         {
             ReactConfiguration.Configuration
-                .SetUseServerSideRouting(true)
+                .SetUseServerSideRouting(false)
                 .SetUseInternalReactScript(false)
                 .SetGeneratedScriptContent(File.ReadAllText(generatedScriptPath));
         }

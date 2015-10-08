@@ -13,7 +13,7 @@ namespace ReactEdge.Sample.Mvc5.Controllers
         public async Task<ActionResult> RenderReact()
         {
             var reactContext = new ReactContext(ReactConfiguration.Configuration);
-            var result = await reactContext.GetHtmlForRoute(new { }, new Route(Request.Path, ""));
+            var result = await reactContext.GetHtml("Contact", new { });
             ViewBag.RawHtmlResult = result;
             return View("ReactView");
         }
